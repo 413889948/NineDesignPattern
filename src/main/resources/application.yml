@@ -1,0 +1,48 @@
+server:
+  port: 8080
+
+swagger:
+  enable: true
+
+mybatis-plus:
+  type-aliases-package: cn.hyx.bg.entity
+  mapper-locations: classpath:/mapper/*Mapper.xml
+
+spring:
+  application:
+    name: bg
+  datasource:
+    url: jdbc:mysql://:3306/bg_data?useUnicode:true&characterEncoding:utf-8&zeroDateTimeBehavior:convertToNull&autoReconnect:true&useSSL:true
+    username:
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#pagehelper:
+#  helper-dialect: mysql
+#  reasonable: false
+#  support-methods-arguments: true
+#  params: count=countsql
+
+#redis配置开始
+# Redis数据库索引（默认为0）
+  redis:
+    database: 0
+  # Redis服务器地址
+    host: 127.0.0.1
+  # Redis服务器连接端口
+    port: 8080
+  # Redis服务器连接密码（默认为空）
+    password:
+  # 连接池最大连接数（使用负值表示没有限制）
+    jedis:
+      pool:
+        max-active: 1024
+  # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: 10000
+  # 连接池中的最大空闲连接
+        max-idle: 200
+  # 连接池中的最小空闲连接
+        min-idle: 0
+  # 连接超时时间（毫秒）
+    timeout: 10000
+  #redis配置结束
+    block-when-exhausted: true
