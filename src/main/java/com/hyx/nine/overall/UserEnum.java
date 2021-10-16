@@ -21,6 +21,6 @@ public enum UserEnum {
     /**
      * 区用户
      */
-    AREA_COMMON;
+    AREA_COMMON
 
 }

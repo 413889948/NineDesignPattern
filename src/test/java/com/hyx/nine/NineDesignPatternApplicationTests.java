@@ -1,9 +1,12 @@
 package com.hyx.nine;
 
+import com.hyx.nine.common.DictSingle;
+import com.hyx.nine.common.DictSingleEnum;
 import com.hyx.nine.common.UserPlant;
 import com.hyx.nine.entity.common.User;
 import com.hyx.nine.overall.UserEnum;
 import com.hyx.nine.pattern.plant.PlantDemo;
+import com.hyx.nine.pattern.single.*;
 import com.hyx.nine.utils.LogUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +57,7 @@ class NineDesignPatternApplicationTests {
 
     /**
      * 判断是否是管理员，实际上是在生成的角色子类内已决定参数
+     *
      * @param user 用户类
      */
     private void isAdmin(User user) {
@@ -64,5 +68,37 @@ class NineDesignPatternApplicationTests {
         }
     }
 
+
+    /**
+     * 单例模式demo
+     */
+    @Test
+    void singleDemo() {
+        Lazy lazy = Lazy.getLazy();
+        Starve starve = Starve.getStarve();
+        DoubleChecked doubleChecked = DoubleChecked.getDoubleChecked();
+        Static instance = Static.getInstance();
+        LogUtil.info(EnumSingle.ENUM.name());
+
+    }
+
+    /**
+     * 场景：
+     * 1. 目前已知需获取多个字典表数据（字典表数据在程序运行期间一般不变）
+     *
+     * 2. 全局项目皆可调用，且需线程安全
+     *
+     * 3. 普通模式创建会出现重复io问题
+     *
+     * 4. 进行普通单例类设计，与枚举类设计
+     */
+    @Test
+    void DictSingleDemo() {
+        DictSingle.getDictSingle("DM_DW");
+        DictSingle.getDictSingle("DM_DD");
+
+        DictSingleEnum.getDictSingle("DM_DW");
+        DictSingleEnum.getDictSingle("DM_DD");
+    }
 
 }
