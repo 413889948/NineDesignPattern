@@ -1,16 +1,24 @@
 package com.hyx.nine;
 
+import com.hyx.nine.common.DataShape;
 import com.hyx.nine.common.DictSingle;
 import com.hyx.nine.common.DictSingleEnum;
 import com.hyx.nine.common.UserPlant;
 import com.hyx.nine.entity.common.User;
 import com.hyx.nine.overall.UserEnum;
 import com.hyx.nine.pattern.plant.PlantDemo;
+import com.hyx.nine.pattern.shape.ShapeDemo;
+import com.hyx.nine.pattern.shape.ShapeSonOne;
+import com.hyx.nine.pattern.shape.ShapeSonTwo;
 import com.hyx.nine.pattern.single.*;
 import com.hyx.nine.utils.LogUtil;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @SpringBootTest
 class NineDesignPatternApplicationTests {
@@ -93,12 +101,44 @@ class NineDesignPatternApplicationTests {
      * 4. 进行普通单例类设计，与枚举类设计
      */
     @Test
-    void DictSingleDemo() {
+    void dictSingleDemo() {
         DictSingle.getDictSingle("DM_DW");
         DictSingle.getDictSingle("DM_DD");
 
         DictSingleEnum.getDictSingle("DM_DW");
         DictSingleEnum.getDictSingle("DM_DD");
+    }
+
+    /**
+     * 原型模式demo
+     */
+    @Test
+    void shapeDemo() {
+        Map<String, ShapeDemo> map = new HashMap<>();
+        map.put("one", new ShapeSonOne().setPas("111111"));
+        map.put("two", new ShapeSonTwo().setPas("222222"));
+        map.get("one").clone().setPas("999").every();
+        map.get("one").clone().every();
+        map.get("two").clone().every();
+    }
+
+    /**
+     * 场景：
+     * 1. 目前已知有一个业务需要获取数据库数据
+     *
+     * 2. 且多处都要获取该对象进行自定义数据定制
+     *
+     * 3. 暂不考虑内部嵌对象需要进行深克隆的情况
+     */
+    @Test
+    void dataShapeDemo() {
+        // 代表从数据库获取出来数据注入的对象
+        DataShape dataShape = new DataShape();
+        // 定制化
+        DataShape cloneOne = dataShape.clone().setId("1");
+        DataShape cloneTwo = dataShape.clone().setId("2");
+        LogUtil.info(cloneOne.toString());
+        LogUtil.info(cloneTwo.toString());
     }
 
 }
