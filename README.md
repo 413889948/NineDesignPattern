@@ -8,7 +8,7 @@
 - pattern：各个设计模式相关demo
 - test：测试位置，模式demo运行测试均在此
 ## 工厂模式
-
+![img.png](img/img.png)
 ### 场景
 1. 目前已知要通过一个角色值获取该角色对象，角色对象里有该角色的详细信息
 
@@ -23,8 +23,7 @@
 - entity.common---User：用户抽象接口对象，用于定义用户实现标准
 - entity.common.user---所有文件：用于定义各个用户实现
 - overall---UserEnum：用户枚举，对应每个用户的枚举，具体关联关系会在用户工厂内展现
-### 思维导图
-![img.png](img/img.png)
+
 
 ## 单例模式
 
@@ -42,13 +41,14 @@
 - common---DictSingle：静态内部类单例
 - common---DictSingleEnum：枚举单例
 ## 原型模式
-
+![img.png](img/shape.png)
 ### 场景
 1. 目前已知有一个业务需要获取数据库数据
 
 2. 且多处都要获取该对象进行自定义数据定制
 
 3. 暂不考虑内部嵌对象需要进行深克隆的情况
+
 ### 涉及文件
 - pattern.shape：普通demo
 - common---DataShape：对应数据原型模式实现类
