@@ -1,4 +1,4 @@
-package com.hyx.nine.entity.common;
+package com.hyx.nine.entity.common.user;
 
 /**
  * @author hyx

@@ -3,9 +3,17 @@ package com.hyx.nine;
 import com.hyx.nine.common.DataShape;
 import com.hyx.nine.common.DictSingle;
 import com.hyx.nine.common.DictSingleEnum;
+import com.hyx.nine.common.SplitAdapter;
 import com.hyx.nine.common.UserPlant;
-import com.hyx.nine.entity.common.User;
+import com.hyx.nine.entity.common.money.MoneyDecorator;
+import com.hyx.nine.entity.common.money.MoneyOne;
+import com.hyx.nine.entity.common.money.MoneyTwo;
+import com.hyx.nine.entity.common.user.User;
 import com.hyx.nine.overall.UserEnum;
+import com.hyx.nine.pattern.adapter.AdapterDemo;
+import com.hyx.nine.pattern.decorator.DecoratorScheme;
+import com.hyx.nine.pattern.decorator.ServiceImplOne;
+import com.hyx.nine.pattern.decorator.ServiceImplTwo;
 import com.hyx.nine.pattern.plant.PlantDemo;
 import com.hyx.nine.pattern.shape.ShapeDemo;
 import com.hyx.nine.pattern.shape.ShapeSonOne;
@@ -17,7 +25,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @SpringBootTest
@@ -140,5 +150,70 @@ class NineDesignPatternApplicationTests {
         LogUtil.info(cloneOne.toString());
         LogUtil.info(cloneTwo.toString());
     }
+    @Autowired
+    AdapterDemo adapterDemo;
 
+    /**
+     * 适配器模式demo
+     * 适配器与工厂模式有点相似，但是适配器注重的是不同对象间类型的适配，而工厂模式注重的是对象的创建
+     */
+    @Test
+    void adapterDemo() {
+        adapterDemo.runDemo("one","测试测试demo");
+        adapterDemo.runDemo("two","测试测试demo,第二个");
+    }
+
+    @Autowired
+    SplitAdapter splitAdapter;
+
+    /**
+     * 场景：
+     * 1. 目前已知有两个方法都需要用到用户名称列表参数
+     *
+     * 2. 提供的参数统一是List<String>格式的
+     *
+     * 3. 第一个方法要求入参是","隔开，第二个方法要求入参是"@"隔开
+     *
+     * 4. 现在要求用适配器模式提供参数给两个方法入参
+     */
+    @Test
+    void splitAdapterDemo() {
+        List<String> list = new ArrayList<>();
+        list.add("测试");
+        list.add("2号任务");
+        list.add("9981");
+        String one = splitAdapter.run("one", list);
+        String two = splitAdapter.run("two", list);
+        LogUtil.info(one);
+        LogUtil.info(two);
+    }
+
+    /**
+     * 装饰者模式demo
+     * DecoratorScheme装饰者实现类对原类型实现进行装饰操作
+     */
+    @Test
+    void decoratorDemo() {
+        DecoratorScheme one = new DecoratorScheme(new ServiceImplOne());
+        one.run();
+        DecoratorScheme two = new DecoratorScheme(new ServiceImplTwo());
+        two.run();
+    }
+
+
+    /**
+     * 场景：
+     * 1. 目前已知有几个包含金额的实体类
+     *
+     * 2. 需要对这些实体类内的金额进行统一处理，保留2位小数
+     *
+     * 3. 几个实例类的金额统一使用get方法调用
+     */
+    @Test
+    void moneyDemo() {
+        MoneyDecorator one = new MoneyDecorator(new MoneyOne());
+        LogUtil.info(one.toString());
+        MoneyDecorator two = new MoneyDecorator(new MoneyTwo());
+        LogUtil.info(two.toString());
+    }
 }

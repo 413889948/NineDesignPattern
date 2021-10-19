@@ -1,6 +1,6 @@
 package com.hyx.nine.common;
 
-import com.hyx.nine.entity.common.User;
+import com.hyx.nine.entity.common.user.User;
 import com.hyx.nine.entity.common.user.AreaAdmin;
 import com.hyx.nine.entity.common.user.AreaCommon;
 import com.hyx.nine.entity.common.user.CityAdmin;

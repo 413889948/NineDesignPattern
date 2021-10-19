@@ -1,6 +1,5 @@
 package com.hyx.nine.entity.common.user;
 
-import com.hyx.nine.entity.common.User;
 import com.hyx.nine.utils.LogUtil;
 
 /**

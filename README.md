@@ -52,3 +52,31 @@
 ### 涉及文件
 - pattern.shape：普通demo
 - common---DataShape：对应数据原型模式实现类
+## 适配器模式
+
+### 场景
+1. 目前已知有两个方法都需要用到用户名称列表参数
+
+2. 提供的参数统一是List<String>格式的
+
+3. 第一个方法要求入参是","隔开，第二个方法要求入参是"@"隔开
+
+4. 现在要求用适配器模式提供参数给两个方法入参
+### 涉及文件
+- pattern.adapter：普通demo
+- common---SplitAdapter：场景中的适配器类
+- common---AdapterOne：场景中的第一个方法
+- common---Adapter Two：场景中的第二个方法
+## 装饰者模式
+
+### 场景
+1. 目前已知有几个包含金额的实体类
+
+2. 需要对这些实体类内的金额进行统一处理，保留2位小数
+
+3. 几个实例类的金额统一使用get方法调用
+### 涉及文件
+- pattern.decorator：普通demo
+- entity.common.money---MoneyDecorator：装饰者类
+- entity.common.money---MoneyDemo：金额统一父类，主要用于统一金额子类的调用方法
+- entity.common.money---MoneyOne/MoneyTwo：两个金额demo实现子类
