@@ -225,7 +225,7 @@ class NineDesignPatternApplicationTests {
     ProxyService proxyService;
 
     /**
-     * 代理模式demo
+     * 代理模式demo，装饰者模式与代理模式结构上有点相似，但是实际上，装饰者模式通常能在运行时进行动态的对一些类进行装饰，而代理模式通常在执行时就确定了代理的对象
      * 1. 传统代理模式
      * 2. spring aop代理模式
      */

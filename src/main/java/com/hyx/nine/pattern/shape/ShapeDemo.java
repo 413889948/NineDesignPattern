@@ -6,11 +6,11 @@ import lombok.experimental.Accessors;
 /**
  * @Author: huangyx
  * @Date: 2021/10/18 15:18
- *
+ * 原型模式
  */
 @Data
 @Accessors(chain = true)
-public abstract class ShapeDemo implements Cloneable{
+public abstract class ShapeDemo implements Cloneable {
 
     private String name;
     private String pas;
@@ -19,6 +19,7 @@ public abstract class ShapeDemo implements Cloneable{
      * 用于扩展的抽象类
      */
     public abstract void every();
+
     @Override
     public ShapeDemo clone() {
         try {

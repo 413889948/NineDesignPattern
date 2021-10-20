@@ -53,7 +53,7 @@
 - pattern.shape：普通demo
 - common---DataShape：对应数据原型模式实现类
 ## 适配器模式
-
+![img.png](img/adapter.png)
 ### 场景
 1. 目前已知有两个方法都需要用到用户名称列表参数
 
@@ -68,7 +68,7 @@
 - common---AdapterOne：场景中的第一个方法
 - common---Adapter Two：场景中的第二个方法
 ## 装饰者模式
-
+![img.png](img/decorator.png)
 ### 场景
 1. 目前已知有几个包含金额的实体类
 
