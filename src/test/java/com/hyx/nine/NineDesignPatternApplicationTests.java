@@ -3,6 +3,7 @@ package com.hyx.nine;
 import com.hyx.nine.common.DataShape;
 import com.hyx.nine.common.DictSingle;
 import com.hyx.nine.common.DictSingleEnum;
+import com.hyx.nine.common.FeedbackProxy;
 import com.hyx.nine.common.SplitAdapter;
 import com.hyx.nine.common.UserPlant;
 import com.hyx.nine.entity.common.money.MoneyDecorator;
@@ -15,6 +16,8 @@ import com.hyx.nine.pattern.decorator.DecoratorScheme;
 import com.hyx.nine.pattern.decorator.ServiceImplOne;
 import com.hyx.nine.pattern.decorator.ServiceImplTwo;
 import com.hyx.nine.pattern.plant.PlantDemo;
+import com.hyx.nine.pattern.proxy.ProxyDemoImpl;
+import com.hyx.nine.pattern.proxy.ProxyService;
 import com.hyx.nine.pattern.shape.ShapeDemo;
 import com.hyx.nine.pattern.shape.ShapeSonOne;
 import com.hyx.nine.pattern.shape.ShapeSonTwo;
@@ -150,6 +153,7 @@ class NineDesignPatternApplicationTests {
         LogUtil.info(cloneOne.toString());
         LogUtil.info(cloneTwo.toString());
     }
+
     @Autowired
     AdapterDemo adapterDemo;
 
@@ -159,8 +163,8 @@ class NineDesignPatternApplicationTests {
      */
     @Test
     void adapterDemo() {
-        adapterDemo.runDemo("one","测试测试demo");
-        adapterDemo.runDemo("two","测试测试demo,第二个");
+        adapterDemo.runDemo("one", "测试测试demo");
+        adapterDemo.runDemo("two", "测试测试demo,第二个");
     }
 
     @Autowired
@@ -216,4 +220,40 @@ class NineDesignPatternApplicationTests {
         MoneyDecorator two = new MoneyDecorator(new MoneyTwo());
         LogUtil.info(two.toString());
     }
+
+    @Autowired
+    ProxyService proxyService;
+
+    /**
+     * 代理模式demo
+     * 1. 传统代理模式
+     * 2. spring aop代理模式
+     */
+    @Test
+    void proxyDemo() {
+        // 普通
+        ProxyService proxyDemo = new ProxyDemoImpl();
+        proxyDemo.demo();
+        // aop
+        proxyService.demo();
+    }
+
+    @Autowired
+    FeedbackProxy feedbackProxy;
+
+    /**
+     * 场景：
+     * 1. 目前已知原本有一个用户反馈方法
+     *
+     * 2. 现需要在反馈给用户信息之前对信息与用户信息进行补充处理
+     *
+     * 3. 结束反馈后需进行记录
+     *
+     * 4. 使用spring aop方式进行代理
+     */
+    @Test
+    void feedbackDemo() {
+        feedbackProxy.feedback("入参", "出参");
+    }
+
 }

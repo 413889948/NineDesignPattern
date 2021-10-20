@@ -80,3 +80,18 @@
 - entity.common.money---MoneyDecorator：装饰者类
 - entity.common.money---MoneyDemo：金额统一父类，主要用于统一金额子类的调用方法
 - entity.common.money---MoneyOne/MoneyTwo：两个金额demo实现子类
+## 代理模式
+1. 传统代理模式
+2. spring aop代理模式
+### 场景
+1. 目前已知原本有一个用户反馈方法
+
+2. 现需要在反馈给用户信息之前对信息与用户信息进行补充处理
+
+3. 结束反馈后需进行记录
+
+4. 使用spring aop方式进行代理
+### 涉及文件
+- pattern.proxy：普通demo
+- common---FeedbackProxy：被代理的用户反馈类
+- common.aop---MoneyDemo：aop代理类
