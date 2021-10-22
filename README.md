@@ -95,3 +95,13 @@
 - pattern.proxy：普通demo
 - common---FeedbackProxy：被代理的用户反馈类
 - common.aop---MoneyDemo：aop代理类
+## 观察者模式
+
+### 场景
+1. 目前已知当用户执行设置姓名的方法且没有默认属性的时候，需通过观察者默认给用户默认属性
+2. 默认属性有：权限（默认：普通用户），性别（默认：保密），个性签名（默认：无）
+3. 要求用户实际只进行了姓名设置，而观察者们进行了各个默认属性的设置，每个属性一个观察者
+### 涉及文件
+- pattern.observer：普通demo
+- common---UserSubject：被观察的用户对象
+- common---ObserverUser及其实现：观察者对象

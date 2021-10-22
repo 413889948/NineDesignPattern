@@ -4,8 +4,12 @@ import com.hyx.nine.common.DataShape;
 import com.hyx.nine.common.DictSingle;
 import com.hyx.nine.common.DictSingleEnum;
 import com.hyx.nine.common.FeedbackProxy;
+import com.hyx.nine.common.ObserverUserPower;
+import com.hyx.nine.common.ObserverUserSex;
+import com.hyx.nine.common.ObserverUserSignature;
 import com.hyx.nine.common.SplitAdapter;
 import com.hyx.nine.common.UserPlant;
+import com.hyx.nine.common.UserSubject;
 import com.hyx.nine.entity.common.money.MoneyDecorator;
 import com.hyx.nine.entity.common.money.MoneyOne;
 import com.hyx.nine.entity.common.money.MoneyTwo;
@@ -15,6 +19,11 @@ import com.hyx.nine.pattern.adapter.AdapterDemo;
 import com.hyx.nine.pattern.decorator.DecoratorScheme;
 import com.hyx.nine.pattern.decorator.ServiceImplOne;
 import com.hyx.nine.pattern.decorator.ServiceImplTwo;
+import com.hyx.nine.pattern.observer.AopObserver;
+import com.hyx.nine.pattern.observer.AopSubject;
+import com.hyx.nine.pattern.observer.ObserverOne;
+import com.hyx.nine.pattern.observer.ObserverTwo;
+import com.hyx.nine.pattern.observer.Subject;
 import com.hyx.nine.pattern.plant.PlantDemo;
 import com.hyx.nine.pattern.proxy.ProxyDemoImpl;
 import com.hyx.nine.pattern.proxy.ProxyService;
@@ -254,6 +263,57 @@ class NineDesignPatternApplicationTests {
     @Test
     void feedbackDemo() {
         feedbackProxy.feedback("入参", "出参");
+    }
+
+    @Autowired
+    private AopObserver aopObserver;
+
+    @Autowired
+    private AopSubject aopSubject;
+    /**
+     * 观察者模式
+     * 代理模式+观察者模式实现低耦合调用
+     */
+    @Test
+    void observerDemo() {
+        Subject subject = new Subject();
+
+        // 进行绑定
+        new ObserverOne(subject);
+        new ObserverTwo(subject);
+
+        System.out.println("被观察者改变状态：15");
+        subject.setState(15);
+        System.out.println("被观察者改变状态：10");
+        subject.setState(10);
+        // aop
+        // 进行绑定
+        new ObserverOne(aopObserver);
+        new ObserverTwo(aopObserver);
+
+        System.out.println("被观察者改变状态：22");
+        aopSubject.setState(22);
+        System.out.println("被观察者改变状态：11");
+        aopSubject.setState(11);
+
+    }
+
+    /**
+     * 场景：
+     * 1. 目前已知当用户执行设置姓名的方法且没有默认属性的时候，需通过观察者默认给用户默认属性
+     *
+     * 2. 默认属性有：权限（默认：普通用户），性别（默认：保密），个性签名（默认：无）
+     *
+     * 3. 要求用户实际只进行了姓名设置，而观察者们进行了各个默认属性的设置，每个属性一个观察者
+     */
+    @Test
+    void feedbackDemo2() {
+        UserSubject userSubject = new UserSubject();
+        new ObserverUserPower(userSubject);
+        new ObserverUserSex(userSubject);
+        new ObserverUserSignature(userSubject);
+        userSubject.setName("测试用户");
+        LogUtil.info(userSubject.toString());
     }
 
 }
