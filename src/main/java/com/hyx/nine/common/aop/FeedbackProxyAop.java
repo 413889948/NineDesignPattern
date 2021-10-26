@@ -1,5 +1,6 @@
 package com.hyx.nine.common.aop;
 
+import com.hyx.nine.common.note.TestNote;
 import com.hyx.nine.utils.LogUtil;
 
 import org.aspectj.lang.JoinPoint;
@@ -29,6 +30,20 @@ public class FeedbackProxyAop {
             args = Arrays.stream(args).map(str -> str + "(已加工)").toArray();
         }
         LogUtil.info("进入反馈前，打上加工标识");
+        // 执行
+        return pjp.proceed(args);
+    }
+
+    /**
+     * 对注解的方法进行追踪代理
+     * @param pjp 方法参数
+     * @param testNote 注解参数
+     * @return 返回值
+     * @throws Throwable Throwable
+     */
+    @Around("@annotation(com.hyx.nine.common.note.TestNote) && @annotation(testNote)")
+    public Object aopAround(ProceedingJoinPoint pjp, TestNote testNote) throws Throwable {
+        Object[] args = pjp.getArgs();
         // 执行
         return pjp.proceed(args);
     }
