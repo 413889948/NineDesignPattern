@@ -106,3 +106,26 @@
 - pattern.observer：普通demo
 - common---UserSubject：被观察的用户对象
 - common---ObserverUser及其实现：观察者对象
+## 策略模式
+
+### 场景
+1. 当前已知有多个用户对象：管理员，普通用户
+2. 他们各自有不同的属性与获取权限的方法
+3. 获得的权限用以验证身份
+### 涉及文件
+- pattern.strategy：普通demo
+- entity---UserEntity：策略接口
+- entity---CommonEntity/AdminEntity：策略对象
+- common---UserStrategy：获取策略对象的方法
+## 模板模式
+
+### 场景
+1. 目前存在需求要求对上报流程进行封装
+
+2. 但是上报流程区分为区级上报与市级上报
+
+3. 两个上报方式都分为3步：提交上报，审核上报，结束上报
+### 涉及文件
+- pattern.template：普通demo
+- common---AreaReport/CityReport：模板实现
+- common---ReportDemo：上报模板

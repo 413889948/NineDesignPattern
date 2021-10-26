@@ -1,15 +1,9 @@
 package com.hyx.nine;
 
-import com.hyx.nine.common.DataShape;
-import com.hyx.nine.common.DictSingle;
-import com.hyx.nine.common.DictSingleEnum;
-import com.hyx.nine.common.FeedbackProxy;
-import com.hyx.nine.common.ObserverUserPower;
-import com.hyx.nine.common.ObserverUserSex;
-import com.hyx.nine.common.ObserverUserSignature;
-import com.hyx.nine.common.SplitAdapter;
-import com.hyx.nine.common.UserPlant;
-import com.hyx.nine.common.UserSubject;
+import com.hyx.nine.common.*;
+import com.hyx.nine.entity.common.AdminEntity;
+import com.hyx.nine.entity.common.CommonEntity;
+import com.hyx.nine.entity.common.UserEntity;
 import com.hyx.nine.entity.common.money.MoneyDecorator;
 import com.hyx.nine.entity.common.money.MoneyOne;
 import com.hyx.nine.entity.common.money.MoneyTwo;
@@ -31,6 +25,12 @@ import com.hyx.nine.pattern.shape.ShapeDemo;
 import com.hyx.nine.pattern.shape.ShapeSonOne;
 import com.hyx.nine.pattern.shape.ShapeSonTwo;
 import com.hyx.nine.pattern.single.*;
+import com.hyx.nine.pattern.strategy.Strategy;
+import com.hyx.nine.pattern.strategy.StrategyDemo;
+import com.hyx.nine.pattern.strategy.StrategyOne;
+import com.hyx.nine.pattern.strategy.StrategyTwo;
+import com.hyx.nine.pattern.template.TemplateOne;
+import com.hyx.nine.pattern.template.TemplateTwo;
 import com.hyx.nine.utils.LogUtil;
 
 import org.junit.jupiter.api.Test;
@@ -115,11 +115,11 @@ class NineDesignPatternApplicationTests {
     /**
      * 场景：
      * 1. 目前已知需获取多个字典表数据（字典表数据在程序运行期间一般不变）
-     *
+     * <p>
      * 2. 全局项目皆可调用，且需线程安全
-     *
+     * <p>
      * 3. 普通模式创建会出现重复io问题
-     *
+     * <p>
      * 4. 进行普通单例类设计，与枚举类设计
      */
     @Test
@@ -147,9 +147,9 @@ class NineDesignPatternApplicationTests {
     /**
      * 场景：
      * 1. 目前已知有一个业务需要获取数据库数据
-     *
+     * <p>
      * 2. 且多处都要获取该对象进行自定义数据定制
-     *
+     * <p>
      * 3. 暂不考虑内部嵌对象需要进行深克隆的情况
      */
     @Test
@@ -182,11 +182,11 @@ class NineDesignPatternApplicationTests {
     /**
      * 场景：
      * 1. 目前已知有两个方法都需要用到用户名称列表参数
-     *
+     * <p>
      * 2. 提供的参数统一是List<String>格式的
-     *
+     * <p>
      * 3. 第一个方法要求入参是","隔开，第二个方法要求入参是"@"隔开
-     *
+     * <p>
      * 4. 现在要求用适配器模式提供参数给两个方法入参
      */
     @Test
@@ -217,9 +217,9 @@ class NineDesignPatternApplicationTests {
     /**
      * 场景：
      * 1. 目前已知有几个包含金额的实体类
-     *
+     * <p>
      * 2. 需要对这些实体类内的金额进行统一处理，保留2位小数
-     *
+     * <p>
      * 3. 几个实例类的金额统一使用get方法调用
      */
     @Test
@@ -253,11 +253,11 @@ class NineDesignPatternApplicationTests {
     /**
      * 场景：
      * 1. 目前已知原本有一个用户反馈方法
-     *
+     * <p>
      * 2. 现需要在反馈给用户信息之前对信息与用户信息进行补充处理
-     *
+     * <p>
      * 3. 结束反馈后需进行记录
-     *
+     * <p>
      * 4. 使用spring aop方式进行代理
      */
     @Test
@@ -270,6 +270,7 @@ class NineDesignPatternApplicationTests {
 
     @Autowired
     private AopSubject aopSubject;
+
     /**
      * 观察者模式
      * 代理模式+观察者模式实现低耦合调用
@@ -301,13 +302,13 @@ class NineDesignPatternApplicationTests {
     /**
      * 场景：
      * 1. 目前已知当用户执行设置姓名的方法且没有默认属性的时候，需通过观察者默认给用户默认属性
-     *
+     * <p>
      * 2. 默认属性有：权限（默认：普通用户），性别（默认：保密），个性签名（默认：无）
-     *
+     * <p>
      * 3. 要求用户实际只进行了姓名设置，而观察者们进行了各个默认属性的设置，每个属性一个观察者
      */
     @Test
-    void feedbackDemo2() {
+    void userDemo() {
         UserSubject userSubject = new UserSubject();
         new ObserverUserPower(userSubject);
         new ObserverUserSex(userSubject);
@@ -316,4 +317,60 @@ class NineDesignPatternApplicationTests {
         LogUtil.info(userSubject.toString());
     }
 
+    /**
+     * 策略模式
+     */
+    @Test
+    void strategyDemo() {
+        StrategyDemo demo1 = new StrategyDemo(new StrategyOne());
+        StrategyDemo demo2 = new StrategyDemo(new StrategyTwo());
+        demo1.run();
+        demo2.run();
+    }
+
+    /**
+     * 场景：
+     * 1. 当前已知有多个用户对象：管理员，普通用户
+     *
+     * 2. 他们各自有不同的属性与获取权限的方法
+     *
+     * 3. 获得的权限用以验证身份
+     */
+    @Test
+    void powerDemo() {
+        UserStrategy user1 = new UserStrategy(new AdminEntity());
+        UserStrategy user2 = new UserStrategy(new CommonEntity());
+        verifyPower(user1.getPower());
+        verifyPower(user2.getPower());
+    }
+
+    void verifyPower(boolean flag) {
+        if (flag) {
+            LogUtil.info("这是管理权限，通过");
+        } else {
+            LogUtil.info("这是普通用户权限，不通过");
+        }
+    }
+    /**
+     * 模板模式
+     */
+    @Test
+    void templateDemo() {
+        new TemplateOne().run();
+        new TemplateTwo().run();
+    }
+
+    /**
+     * 场景：
+     * 1. 目前存在需求要求对上报流程进行封装
+     *
+     * 2. 但是上报流程区分为区级上报与市级上报
+     *
+     * 3. 两个上报方式都分为3步：提交上报，审核上报，结束上报
+     */
+    @Test
+    void reportDemo() {
+        new AreaReport().run();
+        new CityReport().run();
+    }
 }
