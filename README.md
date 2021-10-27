@@ -26,7 +26,7 @@
 
 
 ## 单例模式
-
+![img.png](img/单例模式.png)
 ### 场景
 1. 目前已知需获取多个字典表数据（字典表数据在程序运行期间一般不变）
 
@@ -97,17 +97,17 @@
 - common---FeedbackProxy：被代理的用户反馈类
 - common.aop---MoneyDemo：aop代理类
 ## 观察者模式
-
+![img.png](img/观察者模式.png)
 ### 场景
 1. 目前已知当用户执行设置姓名的方法且没有默认属性的时候，需通过观察者默认给用户默认属性
 2. 默认属性有：权限（默认：普通用户），性别（默认：保密），个性签名（默认：无）
 3. 要求用户实际只进行了姓名设置，而观察者们进行了各个默认属性的设置，每个属性一个观察者
 ### 涉及文件
-- pattern.observer：普通demo
+- pattern.**observer**：普通demo
 - common---UserSubject：被观察的用户对象
 - common---ObserverUser及其实现：观察者对象
 ## 策略模式
-
+![img.png](img/策略模式.png)
 ### 场景
 1. 当前已知有多个用户对象：管理员，普通用户
 2. 他们各自有不同的属性与获取权限的方法
@@ -118,7 +118,7 @@
 - entity---CommonEntity/AdminEntity：策略对象
 - common---UserStrategy：获取策略对象的方法
 ## 模板模式
-
+![img.png](img/模板模式.png)
 ### 场景
 1. 目前存在需求要求对上报流程进行封装
 
